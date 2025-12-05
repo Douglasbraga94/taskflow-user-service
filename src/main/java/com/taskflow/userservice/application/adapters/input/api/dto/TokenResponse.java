@@ -1,10 +1,13 @@
 package com.taskflow.userservice.application.adapters.input.api.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-@Data
-@AllArgsConstructor
-public class TokenResponse {
-    private String token;
+/**
+ * DTO de resposta para o login (retorna o JWT).
+ */
+public record TokenResponse(
+        String token,
+        String tokenType
+) {
+    public TokenResponse(String token) {
+        this(token, "Bearer");
+    }
 }

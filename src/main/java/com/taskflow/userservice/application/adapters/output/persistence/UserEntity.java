@@ -1,15 +1,14 @@
 package com.taskflow.userservice.application.adapters.output.persistence;
 
-import com.taskflow.userservice.domain.model.Role; // Usa o enum do Domínio
-import jakarta.persistence.*; // Anotações do JPA
+import com.taskflow.userservice.domain.model.Role;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 /**
- * Representa a entidade de banco de dados (Infraestrutura).
- * Mapeia a tabela 'users' no PostgreSQL.
+ * Entidade de persistência JPA para o modelo User.
  */
 @Entity
 @Table(name = "users")
@@ -23,17 +22,19 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
     private String passwordHash;
 
+    @Column(nullable = false)
     private String name;
 
-    private boolean active;
+    @Column(nullable = false)
+    private boolean active = true;
 
-    // Mapeia o enum Role para ser salvo como string no banco de dados
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
 }

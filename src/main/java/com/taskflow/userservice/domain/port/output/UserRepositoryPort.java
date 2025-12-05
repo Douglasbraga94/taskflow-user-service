@@ -27,4 +27,10 @@ public interface UserRepositoryPort {
      * @return um Optional contendo o User, se encontrado.
      */
     Optional<User> findByEmail(String email);
+
+    /**
+     * Verifica se o repositório contém algum usuário.
+     * @return true se houver pelo menos um usuário, false caso contrário.
+     */
+    boolean existsAnyUser();
 }

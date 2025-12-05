@@ -1,16 +1,16 @@
 package com.taskflow.userservice.application.adapters.output.persistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import com.taskflow.userservice.application.adapters.output.persistence.UserEntity;
 import java.util.Optional;
 
 /**
- * Interface simples do Spring Data JPA.
- * O Spring cria automaticamente a implementação que faz o CRUD.
+ * Repositório JPA que interage diretamente com o banco de dados.
  */
 public interface UserRepositoryJpa extends JpaRepository<UserEntity, Long> {
 
-    // Spring Data JPA gera o metodo SQL automaticamente a partir do nome!
+    // Usado pelo UserRepositoryAdapter
     Optional<UserEntity> findByEmail(String email);
 
-    Optional<UserEntity> findByname(String nome);
+    // O metodo count() e findById() são fornecidos por JpaRepository.
 }
