@@ -1,29 +1,26 @@
-# ————————————————————————
-# Etapa 1: build da aplicação com Maven
-# ————————————————————————
-FROM maven:3.8.6-openjdk-17-slim AS build
+# Etapa 1: Build da aplicação com Maven e OpenJDK 17
+FROM openjdk:17-slim AS build
+
+# Instalar Maven
+RUN apt-get update && apt-get install -y maven
 
 WORKDIR /app
 
-# Copia o pom.xml e os arquivos de build (opcional: cache de dependências)
-COPY pom.xml ./
-# Copia o diretório src
-COPY src ./src
+# Copiar os arquivos do projeto
+COPY . .
 
-# Compila e empacota (skip tests para acelerar — você pode remover -DskipTests se quiser rodar testes)
+# Construir o projeto com Maven
 RUN mvn clean package -DskipTests
 
-# ————————————————————————
-# Etapa 2: rodar a aplicação usando JRE leve
-# ————————————————————————
+# Etapa 2: Rodar a aplicação com uma imagem leve
 FROM eclipse-temurin:17-jdk-alpine
 
 WORKDIR /app
 
-# Copia o JAR gerado da etapa de build
+# Copiar o JAR gerado pela etapa de build
 COPY --from=build /app/target/*.jar app.jar
 
-# Exponha a porta padrão do Spring Boot
+# Expor a porta padrão do Spring Boot
 EXPOSE 8080
 
 # Comando para rodar a aplicação
